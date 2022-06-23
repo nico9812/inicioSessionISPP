@@ -1,0 +1,14 @@
+.titulo{
+    background-color: rgb(85, 167, 221);
+    padding: 2%;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 3px black;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    box-shadow: 5px 5px 5px 5px #4b70a0;
+}
+body{
+    background-color: skyblue;
+    font-family: Arial, Helvetica, sans-serif;
+}

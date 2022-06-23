@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Recuperar Contraseña{% endblock %}
+
+{% block body %}
+<form action="/confirmarclave" align="center" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="id" value="{{ id }}">
+    <label for="password"> Ingresa una nueva clave</label>
+    <input type="password" name="password" id="password" placeholder="Contraseña">
+    <label for="passwordconfirm"> Ingresa nuevamente</label>
+    <input type="password" name="passwordconfirm" id="passwordconfirm" placeholder="Confirma tu Contraseña">
+    <input type="submit" value="Enviar">
+</form>
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <h5>
+            <div class="alert alert-primary alert-dismissible" role="alert" align="center">
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span>&times;</span></button>
+            </div>
+        </h5>
+        
+        {% endfor %}
+        {% endif %}
+{% endwith %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Recuperar Contraseña{% endblock %}
+
+{% block body %}
+<form action="/enviarmail" align="center" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="email"> Ingresa tu email</label>
+    <input type="email" name="email" id="email" placeholder="Ingresa tu email">
+    <input type="submit" value="Enviar">
+</form>
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <h5>
+            <div class="alert alert-primary alert-dismissible" role="alert" align="center">
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span>&times;</span></button>
+            </div>
+        </h5>
+        
+        {% endfor %}
+        {% endif %}
+{% endwith %}
+{% endblock %}
