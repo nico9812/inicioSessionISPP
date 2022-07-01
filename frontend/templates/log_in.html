@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %} Inicio de Sesión {% endblock %}
+
+{% block head %}
+{{super()}}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/login.css') }}"
+/>
+{% endblock %}
+
+{% block content %}
+{{super()}}
+<div class="container">
+  <image src="{{url_for('static',filename = 'images/logoispp.jpg')}}" >
+  <form
+    action="{{url_for('auth.login')}}"
+    class="form"
+    id="login"
+    method="POST">
+    <h1 class="tituloForm">Inicio de Sesión</h1>
+    <div class="formInput-grupo">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input
+        type="text"
+        id="correo"
+        name="Lcorreo"
+        class="formInput"
+        autofocus
+        placeholder="Ingrese el Correo/Usuario"
+      />
+    </div>
+    <div class="formInput-grupo">
+      <input
+        type="password"
+        id="password"
+        name="Lpassword"
+        class="formInput"
+        autofocus
+        placeholder="Ingrese la Contraseña"
+      />
+    </div>
+    <div align="center">
+      <button class="formBoton" type="submit">Login</button>
+    </div>
+    <p class="formText">
+      <a href="{{url_for('auth.recuperarcontraseña')}}" class="formLink">¿Olvidaste tu contraseña?</a>
+    </p>
+    <p class="formText">
+      <a class="formLink" href="./" id="linkCreateAccount"
+        >Haz click aquí para crear una cuenta</a
+      >
+    </p>
+  </form>
+  <form
+    action="{{url_for('auth.sign_up')}}"
+    class="form form--hidden"
+    id="createAccount"
+    method="POST">
+    <h1 class="tituloForm">Crear Cuenta</h1>
+    <div class="formInput-grupo">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input
+        type="text"
+        id="correo"
+        name="Rcorreo"
+        class="formInput"
+        autofocus
+        placeholder="Ingresa el Correo"
+      />
+    </div>
+    <div class="formInput-grupo">
+      <input
+        type="text"
+        id="usuario"
+        name="Rusuario"
+        class="formInput"
+        autofocus
+        placeholder="Ingresa el Usuario"
+      />
+    </div>
+    <div class="formInput-grupo">
+      <input
+        type="password"
+        id="password1"
+        name="Rpassword1"
+        class="formInput"
+        autofocus
+        placeholder="Ingresa la Contraseña"
+      />
+    </div>
+    <div class="formInput-grupo">
+      <input
+        type="password"
+        id="password2"
+        name="Rpassword2"
+        class="formInput"
+        autofocus
+        placeholder="Ingresa la Contraseña de nuevo"
+      />
+    </div>
+    <div align="center">
+      <button class="formBoton" type="submit">Crear</button>
+    </div>
+    <p class="formText">
+      <a class="formLink" href="./" id="linkLogin"
+        >Haz click aquí si ya posees una cuenta</a
+      >
+    </p>
+  </form>
+</div>
+{% endblock %}
+
+{%block script%} 
+{{super()}}
+<script src="{{url_for('static', filename='/scripts/login.js')}}"></script>
+{%endblock%}

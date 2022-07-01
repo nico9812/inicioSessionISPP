@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Recuperar Contraseña{% endblock %}
+
+{% block navbar%}
+{{super()}}
+{% endblock %}
+
+{% block content %}
+{{super()}}
+<form action="{{url_for('auth.recuperarcontraseña')}}" method="post">
+    <div class="container-sm mt-5">
+            <div class="jumbotron text-center align-items-center">
+                <h1 class="display-12 text-center align-items-center d-flex">Recuperación de Contraseña</h1>
+                <hr class="my-3">            
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="form-group mb-2">
+                        <label for="email">Ingresa tu email</label>
+                        <br>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Ingresa tu email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mail</button>
+                    <a href="{{url_for('auth.login')}}" class="btn btn-danger">Volver</a>
+            </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block titulo %}Cambiar Contraseña{% endblock %}
+
+{%block navbar%}
+{%endblock%}
+
+{% block content %}
+{{super()}}
+<form action="{{url_for('auth.cambiarcontraseña')}}" method="post">
+  <div class="container-sm mt-5">
+    <div class="jumbotron text-center align-items-center">
+      <h1 class="display-12 text-center align-items-center d-flex">
+        Restauración de Contraseña
+      </h1>
+      <hr class="my-3">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <input type="hidden" name="id" value="{{ id }}">
+      <div class="form-group mb-2">
+        <div class="form-group">
+          <label for="password">Ingresa una nueva clave</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="Ingrese una Nueva Contraseña"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="passwordconfirm">Ingresa de nuevo la contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            name="passwordconfirm"
+            id="passwordconfirm"
+            placeholder="Confirma tu Contraseña"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

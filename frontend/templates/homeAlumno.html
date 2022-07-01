@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block css%}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/home.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}
+{{super()}}
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content%}
+{{super()}}
+
+<div class="jumbotron  mycustom-jumbotron">
+  <h1 class="display-4">¡Bienvenido, {{current_user.usuario.upper()}}!</h1>
+  <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <hr class="my-4">
+  <p>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+</div>
+
+{% endblock %}

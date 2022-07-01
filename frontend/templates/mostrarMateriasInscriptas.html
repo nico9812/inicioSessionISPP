@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/materias.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}
+{{super()}}
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content%}
+{{super()}}
+
+
+{{super()}}   
+{%for i in range(año)%}
+    {%if i != '0'%}
+        {% from "macroEscolar.html" import show_anio_materia%}
+        {{ show_anio_materia(años[i][0], años[i][1], materias) }}
+    {%endif%}
+{%endfor%}
+
+{% endblock %}

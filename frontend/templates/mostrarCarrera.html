@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/materias.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}
+{{super()}}
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content%}
+
+{{super()}}
+    {% from "macroEscolar.html" import show_carreras%}
+    {{ show_carreras(row) }}
+{% endblock %}

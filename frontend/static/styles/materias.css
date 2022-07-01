@@ -1,0 +1,41 @@
+.materias {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+
+h1 {
+    color: aliceblue;
+    font-size: 2.5rem;
+    background-color: teal;
+}
+
+a {
+    color: #212529;
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color:white;
+    
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.card-body.text-center:hover{
+    background-color: grey;
+    color: white;
+}

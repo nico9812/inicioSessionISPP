@@ -1,0 +1,25 @@
+{% macro show_anio_materia(nomanio, anio, row) %}
+<br>
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center align-items-center h-100 p-4 ">
+                <h1> {{nomanio}} </h1>
+                <div class="row">
+                    {%for column in row %}
+                    {%if column[3] == anio %}
+                    <div class="col-6 col-sm-4 p-1">
+                        <div class="card d-flex flex-column">
+                            <div class="card-body">
+                                <h5 class="card-title">Materia: {{column[1]}}</h5>
+                                <p class="card-text">Tipo: {{column[4]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div> 
+        </div> 
+    </div>
+<br>
+{%endmacro%}

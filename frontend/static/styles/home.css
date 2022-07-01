@@ -1,0 +1,18 @@
+body {
+    --color-primary: rgb(122, 202, 233);
+    --color-primary-dark: rgb(31, 177, 230);
+    --color-primary-light: rgb(165, 214, 234);
+    --color-secondary: rgb(3, 132, 183);
+    --border-radius: 4px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 18px;
+    background-color: var(--color-primary);
+    background-size: cover;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+}
+
