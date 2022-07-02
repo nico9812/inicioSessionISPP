@@ -20,13 +20,19 @@ Home
 {% block content%}
 {{super()}}
 
-
-{{super()}}   
+{%if año == -1%}
+  <br>
+  <h1 align="center">No te inscribiste a ninguna materia</h1>
+{%endif%}
 {%for i in range(año)%}
     {%if i != '0'%}
         {% from "macroEscolar.html" import show_anio_materia%}
         {{ show_anio_materia(años[i][0], años[i][1], materias) }}
     {%endif%}
 {%endfor%}
+
+
+{{super()}}   
+
 
 {% endblock %}

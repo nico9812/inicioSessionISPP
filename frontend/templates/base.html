@@ -39,7 +39,7 @@
             {% if current_user.is_authenticated %}
             <a class="nav-item nav-link" href="/home">Inicio</a>
             <a class="nav-item nav-link" href="{{url_for('vistAlumno.getCarreras')}}">Carreras</a>
-            <a class="nav-item nav-link" href="{{url_for('vistAlumno.getCarrerasInscriptas')}}">Perfil</a>
+            <a class="nav-item nav-link" href="{{url_for('vistAlumno.getCarrerasInscriptas')}}">Careras Inscriptas</a>
             <a class="nav-item nav-link" href="{{url_for('auth.logout')}}">Cerrar Sesión</a>
             {% else %}
             <a class="nav-item nav-link" href="/">Inicio</a>

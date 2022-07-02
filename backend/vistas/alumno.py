@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, request, redirect, url_for
+from flask import Blueprint, render_template, flash, request
 from flask_login import login_required, current_user
 
 from ..models.entidad.EntidadUsuario import User
@@ -68,8 +68,6 @@ def getCarrerasInscriptas():
     # Se optiene la ID del Usuario
     iduser = current_user.id
     
-    #Antecedente, si rol del perfil es = 3 entonces procede a visualizar la vista
-
     #Primero se pasa por el Perfil del Usuario
     cur = mysql.connection.cursor()
     consulta = ("SELECT idusuarioperfil from usuariosperfiles where idusuario = %s")
@@ -81,67 +79,44 @@ def getCarrerasInscriptas():
     cur.execute(consulta,[(iduser)])
     iduser = cur.fetchone()[0]
 
-    #Tercero se pasa por el CarpoEstudiante
-    try:
-        consulta = ("SELECT idCarpo, idCarpoEstudiante from CarpoEstudiante where idestudiante = %s")
-        cur.execute(consulta,[(iduser)])
-        auxiliar = cur.fetchone()
-        Carpo = auxiliar[0]
-        iduser = auxiliar[1]
-        if iduser:
-            consulta = ('''SELECT DISTINCT
-CarreraNombre as 'Carrera',
-PlanNombre as 'Plan',
-IFNULL(OrientacionNombre,'Sin Orientación') as 'Orientación'
-FROM
-carpo
-left JOIN carrera on carpo.CarreraID = carrera.CarreraID
-left JOIN plandeestudio on carpo.PlanDeEstudioID = plandeestudio.PlanID
-left join orientacion on carpo.orientacionid = orientacion.orientacionid
-where carpoid = %s
-order by CarreraNombre;
-''')
-            cur.execute(consulta,[(Carpo)])
-            row = cur.fetchone()
-        else:
-            flash('Este usuario no tiene Carrera Inscripta')
-            return redirect(url_for('views.index'))
-    except Exception as ex:
-        print(ex)
-    #Cuarto, se revisa que Carrera es
-    
-    #Quinto, se revisa que Materias esta inscripto
-    consulta = ('select idmateria from carpestmateria where idcarpoestudiante = %s')
-    cur.execute(consulta, [(iduser)])
-    listaMateriasObtenidas = cur.fetchall()
-    materias = str(listaMateriasObtenidas)
-    materias = materias.replace('(','').replace(')','').replace('[','').replace(']','').replace(',','')
-    return render_template("mostrarCarreraInscripta.html",rowcarpo=row, listamaterias=materias, carpo = Carpo)
+    # #Cuarto, se revisa que Carrera es
+    consulta = ('''SELECT DISTINCT CarreraNombre as 'Carrera', PlanNombre as 'Plan', 
+IFNULL(OrientacionNombre,'Sin Orientación') as 'Orientación', idCARPOEstudiante 
+FROM carpo left JOIN carrera on carpo.CarreraID = carrera.CarreraID 
+left JOIN plandeestudio on carpo.PlanDeEstudioID = plandeestudio.PlanID 
+left join orientacion on carpo.orientacionid = orientacion.orientacionid 
+inner join carpoestudiante on carpoestudiante.idcarpo = carpo.carpoid where carpoestudiante.idestudiante = %s order by CarreraNombre''')
+
+    cur.execute(consulta,[iduser])
+    row=cur.fetchall()
+    return render_template("mostrarCarreraInscripta.html",rowcarpo=row)
 
 
 
 @vistAlumno.route("/mostrarCarrerasInscriptas/Materias")
 @login_required
 def getMateriasInscriptas():
-    idcarpo = request.args.get('idcarpo')
-    materias= request.args.get('materias')
-    materias= materias.split(' ')
+    cur = mysql.connection.cursor()
+    idcarpos = request.args.get('idcarpo')
+    
+    consulta = ('select idmateria from carpestmateria where idcarpoestudiante = %s')
+    cur.execute(consulta, [(idcarpos)])
+    materias = str(cur.fetchall()).replace('(','').replace(')','').replace(',','').split(' ')
     listaMaterias = []
-    for materia in materias:
-        cur = mysql.connection.cursor()
-        consulta = ('SELECT * from materia where idmateria = %s')
-        cur.execute(consulta, [(str(materia))])
-        row = cur.fetchone()
-        listaMaterias.append(row)
-    año=0
-    for mat in listaMaterias:
-        for i in range(4):
-            if int(mat[3])>año:
-                año=int(mat[3])
+    try:
+        for materia in materias:
+            cur = mysql.connection.cursor()
+            consulta = ('SELECT * from materia where idmateria = %s')
+            cur.execute(consulta, [(str(materia))])
+            row = cur.fetchone()
+            listaMaterias.append(row)
+        año=0
+        for mat in listaMaterias:
+            for i in range(4):
+                if int(mat[3])>año:
+                    año=int(mat[3])
+    except Exception as ex:
+        return render_template("mostrarMateriasInscriptas.html",materias=[],años=[], año=-1)
 
     años = [['Primer Año','1'],['Segundo Año','2'],['Tercer Año','3'],['Cuarto Año','4'],['Quinto Año','5']]
-    #cur.execute('SELECT carreraId FROM carpo WHERE carpoid = %s',([idcarpo]))
-    #carreraId = int(cur.fetchone()[0])
-    #cur.execute('SELECT año FROM carrera WHERE carreraid = %s',([carreraId]))
-    #año = int(cur.fetchone()[0])
-    return render_template("mostrarMateriasInscriptas.html",materias=listaMaterias,años=años,año=año)
+    return render_template("mostrarMateriasInscriptas.html",materias=listaMaterias,años=años, año=año)

@@ -19,25 +19,6 @@ Home
 
 {% block content%}
 {{super()}}
-    <br>
-    <div class="container">
-        <div class="card">
-            <div class="card-header text-center align-items-center h-100 p-4 ">
-                <h1> Carreras Inscriptas </h1>
-                <div class="row">
-                    <div class="col-6 col-sm-4 p-1">
-                        <a class="card-title" href="{{url_for('vistAlumno.getMateriasInscriptas',materias=listamaterias, idcarpo = carpo)}}">
-                            <div class="card d-flex flex-column">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Carrera: {{rowcarpo[0]}}</h5>
-                                    <h5 class="card-title">Plan de Estudio: {{rowcarpo[1]}}</h5>
-                                    <h5 class="card-title">Orientacion: {{rowcarpo[2]}}</h5>
-                                </div>
-                            </div>
-                        </a>    
-                    </div>
-                </div>
-            </div> 
-        </div> 
-    </div>
+    {% from "macroEscolar.html" import show_carreras_plan%}
+    {{ show_carreras_plan(rowcarpo)}}
 {% endblock %}
